@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/aneurysm9/challenger/vm"
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +12,12 @@ var rootCmd = &cobra.Command{
 	Use:   "challenger",
 	Short: "A Synacor Challenge VM",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Hello")
+		machine, err := vm.LoadImage("challenge.bin")
+		if err != nil {
+			fmt.Printf("Error loading image: %s", err)
+			os.Exit(1)
+		}
+		machine.Run()
 	},
 }
 
